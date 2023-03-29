@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.domain.Employee;
 import com.mapper.EmployeeMapper;
 import com.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +15,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
+    @Autowired
+    private EmployeeMapper mapper;
+    @Override
+    public Employee isexist(String username, String password) {
 
+        Employee employee = mapper.isexits(username,password);
+        return employee;
 
-
+    }
 }
