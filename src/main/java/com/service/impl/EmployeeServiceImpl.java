@@ -17,11 +17,18 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
     @Autowired
     private EmployeeMapper mapper;
-    @Override
-    public Employee isexist(String username, String password) {
+//    @Override
+//    public Employee isexist(String username, String password) {
+//
+//        return mapper.isexits(username,password);
+//
+//    }
 
-        Employee employee = mapper.isexits(username,password);
-        return employee;
+    @Override
+    public Employee isexistByUsername(String username) {
+      return mapper.isexitsByUsername(username);
 
     }
+
+
 }

@@ -9,5 +9,7 @@ import com.domain.Employee;
  */
 @SuppressWarnings({"all"})
 public interface EmployeeService extends IService<Employee> {
-    Employee isexist(String username,String password);
+//    Employee isexist(String username,String password);
+    Employee isexistByUsername(String username);
+
 }
