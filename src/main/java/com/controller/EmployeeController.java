@@ -2,17 +2,23 @@ package com.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.domain.CODE;
 import com.domain.Employee;
 import com.domain.Result;
 import com.service.EmployeeService;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,5 +82,26 @@ public class EmployeeController {
         IPage page1=new Page(page,pageSize);
         IPage page2 = service.page(page1, null);
         return Result.success(page2);
+    }
+
+    /**
+     * 添加员工
+     * @param employee
+     * @return
+     */
+    @PostMapping
+    public Result<Boolean> insert(HttpServletRequest request,@RequestBody Employee employee){
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
+        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
+        System.out.println(employee);
+        boolean save = service.save(employee);
+
+        if (save)
+            return Result.success(save);
+        else
+            return Result.error("数据异常");
     }
 }
