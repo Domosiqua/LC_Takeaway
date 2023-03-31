@@ -26,6 +26,7 @@ public class Result <R>{
     }
     public static <T> Result<T> error(String msg){
         Result<T> r=new Result();
+        r.code=0;
         r.msg=msg;
         return r;
     }
