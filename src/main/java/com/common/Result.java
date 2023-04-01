@@ -1,5 +1,6 @@
-package com.domain;
+package com.common;
 
+import com.domain.CODE;
 import lombok.Data;
 
 import java.util.HashMap;
