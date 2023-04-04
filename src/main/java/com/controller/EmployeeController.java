@@ -92,12 +92,11 @@ public class EmployeeController {
      */
     @PostMapping
     public Result<Boolean> insert(HttpServletRequest request,@RequestBody Employee employee){
-        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
-        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
-        System.out.println(employee);
+//        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
+//        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
         boolean save = service.save(employee);
 
         if (save)
@@ -115,8 +114,8 @@ public class EmployeeController {
     @PutMapping
     public Result<Boolean> ChangeStatus(HttpServletRequest request, @RequestBody Employee emp){
 
-        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
-        emp.setUpdateTime(LocalDateTime.now());
+//        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
+//        emp.setUpdateTime(LocalDateTime.now());
         return Result.success(service.updateById(emp));
 //        return Result.success( service.ChangeStatus(emp));
     }
@@ -129,6 +128,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public Result<Employee> Changeall(@PathVariable Long id)
     {
+
         Employee emp = service.getById(id);
         if(emp==null){
             return  Result.error("未知错误");
