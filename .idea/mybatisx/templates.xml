@@ -20,14 +20,14 @@
             <option name="moduleUIInfoList">
               <list>
                 <ModuleInfoGo>
-                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="basePath" value="src/main/java/com/mapper" />
                   <option name="configFileName" value="mapperInterface.ftl" />
                   <option name="configName" value="mapperInterface" />
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.java" />
                   <option name="modulePath" value="$PROJECT_DIR$" />
-                  <option name="packageName" value="${domain.basePackage}.mapper" />
+                  <option name="packageName" value="" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
                   <option name="basePath" value="src/main/resources" />
@@ -40,24 +40,24 @@
                   <option name="packageName" value="mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
-                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="basePath" value="src/main/java/com/serviceimpl" />
                   <option name="configFileName" value="serviceImpl.ftl" />
                   <option name="configName" value="serviceImpl" />
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}ServiceImpl" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}ServiceImpl.java" />
                   <option name="modulePath" value="$PROJECT_DIR$" />
-                  <option name="packageName" value="${domain.basePackage}.service.impl" />
+                  <option name="packageName" value="" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
-                  <option name="basePath" value="${domain.basePath}" />
+                  <option name="basePath" value="src/main/java/com/service" />
                   <option name="configFileName" value="serviceInterface.ftl" />
                   <option name="configName" value="serviceInterface" />
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Service" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Service.java" />
                   <option name="modulePath" value="$PROJECT_DIR$" />
-                  <option name="packageName" value="${domain.basePackage}.service" />
+                  <option name="packageName" value="" />
                 </ModuleInfoGo>
               </list>
             </option>
@@ -69,8 +69,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="AddressBook" />
-                  <option name="tableName" value="address_book" />
+                  <option name="className" value="Category" />
+                  <option name="tableName" value="category" />
                 </TableUIInfo>
               </list>
             </option>
