@@ -12,4 +12,5 @@ public interface EmployeeService extends IService<Employee> {
 //    Employee isexist(String username,String password);
     Employee isexistByUsername(String username);
 
+    boolean ChangeStatus(Employee emp);
 }

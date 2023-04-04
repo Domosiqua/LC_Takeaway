@@ -30,5 +30,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     }
 
+    @Override
+    public boolean ChangeStatus(Employee emp) {
+       return mapper.ChangeStatus(emp.getStatus(),emp.getId());
+    }
+
 
 }

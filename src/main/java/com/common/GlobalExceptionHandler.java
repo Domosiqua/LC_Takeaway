@@ -1,9 +1,9 @@
 package com.common;
 
 import lombok.extern.slf4j.Slf4j;
-import org.omg.CORBA.PUBLIC_MEMBER;
+
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -18,7 +18,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public Result<String> ExceptionHandler(SQLIntegrityConstraintViolationException ex){
+
+
         log.error(ex.getMessage());
-        return Result.error("数据出错啦！");
+        if (ex.getMessage().contains("Duplicate entry")){
+           log.error(ex.getMessage().split(" ")[2]+"已经存在");
+            return Result.error("该账号已经存在");
+        }
+        return Result.error("未知错误");
     }
 }

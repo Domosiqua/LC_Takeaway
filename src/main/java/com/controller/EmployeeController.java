@@ -1,14 +1,19 @@
 package com.controller;
 
 
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.domain.Employee;
 import com.common.Result;
 import com.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.util.DigestUtils;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,10 +76,13 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/page")
-    public Result<IPage<Employee>> page(@RequestParam("page") int page,@RequestParam("pageSize") int pageSize){
+    public Result<IPage<Employee>> page(@RequestParam("page") int page,@RequestParam("pageSize") int pageSize,String name){
         IPage page1=new Page(page,pageSize);
-        IPage page2 = service.page(page1, null);
-        return Result.success(page2);
+        LambdaQueryWrapper<Employee> queryWrapper =new LambdaQueryWrapper();
+        queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getName,name);
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+        service.page(page1, queryWrapper);
+        return Result.success(page1);
     }
 
     /**
@@ -96,5 +104,35 @@ public class EmployeeController {
             return Result.success(save);
         else
             return Result.error("数据异常");
+    }
+
+    /**
+     * 编辑与修改状态
+     * @param request
+     * @param emp
+     * @return
+     */
+    @PutMapping
+    public Result<Boolean> ChangeStatus(HttpServletRequest request, @RequestBody Employee emp){
+
+        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
+        emp.setUpdateTime(LocalDateTime.now());
+        return Result.success(service.updateById(emp));
+//        return Result.success( service.ChangeStatus(emp));
+    }
+
+    /**
+     * 根据id查找员工
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public Result<Employee> Changeall(@PathVariable Long id)
+    {
+        Employee emp = service.getById(id);
+        if(emp==null){
+            return  Result.error("未知错误");
+        }
+        return  Result.success(emp);
     }
 }
