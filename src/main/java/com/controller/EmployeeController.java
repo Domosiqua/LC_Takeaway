@@ -92,7 +92,7 @@ public class EmployeeController {
      */
     @PostMapping
     public Result<Boolean> insert(HttpServletRequest request,@RequestBody Employee employee){
-//        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 //        employee.setCreateTime(LocalDateTime.now());
 //        employee.setUpdateTime(LocalDateTime.now());
 //        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
@@ -116,7 +116,11 @@ public class EmployeeController {
 
 //        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
 //        emp.setUpdateTime(LocalDateTime.now());
-        return Result.success(service.updateById(emp));
+        if(service.updateById(emp))
+            return Result.success(service.updateById(emp));
+        else{
+            return Result.error("数据异常");
+        }
 //        return Result.success( service.ChangeStatus(emp));
     }
 

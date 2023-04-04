@@ -1,6 +1,7 @@
 package com.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.common.BaseContext;
 import com.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -49,7 +50,9 @@ public class LoginCheckFilter implements Filter {
         }
         //session中有employee 说明已经登陆 放行
         if (request.getSession().getAttribute("employee")!=null) {
-            log.info("用户已登陆 ：{}",request.getSession().getAttribute("employee"));
+            long id=(long)request.getSession().getAttribute("employee");
+            log.info("用户已登陆 ：{}",id);
+            BaseContext.setCurrentId(id);
             filterChain.doFilter(request,response);
             return;
         }
