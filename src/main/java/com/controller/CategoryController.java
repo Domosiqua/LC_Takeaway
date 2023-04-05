@@ -99,7 +99,9 @@ public class CategoryController {
 
         LambdaQueryWrapper<Category> querywapper=new LambdaQueryWrapper<>();
         querywapper.eq(Category::getType,type);
+        querywapper.orderByDesc(Category::getSort);
         List<Category> list = service.list(querywapper);
+
         return Result.success(list);
     }
 }

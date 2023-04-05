@@ -29,6 +29,7 @@ public class DishFlavor implements Serializable {
     /**
      * 菜品
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long dishId;
 
     /**

@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage());
         if (ex.getMessage().contains("Duplicate entry")){
            log.error(ex.getMessage().split(" ")[2]+"已经存在");
-            return Result.error("该账号已经存在");
+            return Result.error(ex.getMessage().split(" ")[2]+"已经存在");
         }
         return Result.error("未知错误");
     }
