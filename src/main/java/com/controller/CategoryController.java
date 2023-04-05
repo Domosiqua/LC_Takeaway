@@ -1,6 +1,8 @@
 package com.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.Result;
@@ -12,6 +14,8 @@ import org.apache.commons.lang.StringUtils;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author CWB
@@ -69,6 +73,12 @@ public class CategoryController {
             return Result.error("数据错误");
         }
     }
+
+    /**
+     * 删除分类
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     public Result<Boolean> Delete(@RequestParam(name = "ids") Long ids){
         boolean b = service.removeById(ids);
@@ -77,5 +87,19 @@ public class CategoryController {
         }else{
             return Result.error("未知错误");
         }
+    }
+
+    /**
+     * 根据type获取菜品或套餐列表
+     * @param type
+     * @return
+     */
+    @GetMapping("list")
+    public Result<List<Category>> list(Integer type){
+
+        LambdaQueryWrapper<Category> querywapper=new LambdaQueryWrapper<>();
+        querywapper.eq(Category::getType,type);
+        List<Category> list = service.list(querywapper);
+        return Result.success(list);
     }
 }

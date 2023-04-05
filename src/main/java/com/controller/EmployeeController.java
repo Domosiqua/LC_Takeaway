@@ -112,7 +112,7 @@ public class EmployeeController {
      * @return
      */
     @PutMapping
-    public Result<Boolean> ChangeStatus(HttpServletRequest request, @RequestBody Employee emp){
+    public Result<Boolean> ChangeStatus(@RequestBody Employee emp){
 
 //        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
 //        emp.setUpdateTime(LocalDateTime.now());
