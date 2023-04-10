@@ -57,7 +57,7 @@
                   <option name="fileName" value="${domain.fileName}Service" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Service.java" />
                   <option name="modulePath" value="$PROJECT_DIR$" />
-                  <option name="packageName" value="generator.service" />
+                  <option name="packageName" value="${domain.basePackage}.service" />
                 </ModuleInfoGo>
               </list>
             </option>
@@ -69,8 +69,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="DishFlavor" />
-                  <option name="tableName" value="dish_flavor" />
+                  <option name="className" value="SetmealDish" />
+                  <option name="tableName" value="setmeal_dish" />
                 </TableUIInfo>
               </list>
             </option>

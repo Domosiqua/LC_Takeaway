@@ -51,7 +51,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
         boolean b = this.updateById(dishDto);
         List<DishFlavor> flavors = dishDto.getFlavors();
         for (DishFlavor flavor : flavors) {
-            flavor.setDishId(dishDto.getId());
+            flavor.setId(dishDto.getId());
         }
         LambdaQueryWrapper<DishFlavor> querywrapper=new LambdaQueryWrapper<>();
         querywrapper.eq(DishFlavor::getDishId,dishDto.getId());
@@ -80,6 +80,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
     }
 
     @Override
+    @Transactional
     public void DeleteWithFlavor(ArrayList<Long> ids) {
         this.removeByIds(ids);
         LambdaQueryWrapper<DishFlavor> querywrapper=new LambdaQueryWrapper<>();

@@ -84,14 +84,16 @@ public class DishController {
     }
 
     /**
-     * 根据菜品分类id查询所属菜品列表 服务套餐管理
+     * 根据菜品分类id或者菜品名称查询所属菜品列表 服务套餐管理
      * @param categoryId
      * @return
      */
     @GetMapping("/list")
-    public Result<List<Dish>> List(Long categoryId){
+    public Result<List<Dish>> List(Long categoryId,String name){
         LambdaQueryWrapper<Dish> queryWrapper =new LambdaQueryWrapper();
-        queryWrapper.eq(Dish::getCategoryId,categoryId);
+        queryWrapper.eq(categoryId!=null, Dish::getCategoryId,categoryId);
+        queryWrapper.like(name!=null,Dish::getName,name);
+
         List<Dish> list = service.list(queryWrapper);
         return Result.success(list);
     }
@@ -129,8 +131,8 @@ public class DishController {
     public Result<DishDto> GetOne(@PathVariable Long id){
         DishDto dishDto = service.getOneWithFlavor(id);
         return Result.success(dishDto);
+        
     }
-
     /**
      * 修改菜品
      * @param dishDto
@@ -139,18 +141,14 @@ public class DishController {
     @PutMapping
     public Result<String> Update(@RequestBody DishDto dishDto){
 
-            Dish dish=new Dish();
-            BeanUtils.copyProperties(dishDto,dish);
-            List<DishFlavor> flavors = dishDto.getFlavors();
             boolean b = service.updateWithFlavor(dishDto);
             if (b){
                 return Result.success("修改成功");
             }
             return Result.error("修改失败 请刷新页面后重试");
     }
-
     /**
-     * 批量删除或批量删除
+     * 批量删除或单个删除
      * @return
      */
     @DeleteMapping
