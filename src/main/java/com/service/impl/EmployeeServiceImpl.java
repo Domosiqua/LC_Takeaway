@@ -1,5 +1,7 @@
 package com.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.domain.Employee;
 import com.mapper.EmployeeMapper;
@@ -26,14 +28,12 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
 
     @Override
     public Employee isexistByUsername(String username) {
-      return mapper.isexitsByUsername(username);
+        LambdaQueryWrapper<Employee> Wrapper=new LambdaQueryWrapper();
+        Wrapper.eq(Employee::getName,username);
+        return this.getOne(Wrapper);
 
     }
 
-    @Override
-    public boolean ChangeStatus(Employee emp) {
-       return mapper.ChangeStatus(emp.getStatus(),emp.getId());
-    }
 
 
 }

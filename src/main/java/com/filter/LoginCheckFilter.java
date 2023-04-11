@@ -37,7 +37,9 @@ public class LoginCheckFilter implements Filter {
           "/employee/login",
           "/employee/logout",
                 "/backend/**",
-                "/front/**"
+                "/front/**",
+                "/user/login",
+                "/user/sendMsg"
         };
         log.info("拦截到请求:{}",request.getRequestURI());
 
@@ -48,7 +50,7 @@ public class LoginCheckFilter implements Filter {
 
             return;
         }
-        //session中有employee 说明已经登陆 放行
+//        session中有employee 说明已经登陆 放行
         if (request.getSession().getAttribute("employee")!=null) {
             long id=(long)request.getSession().getAttribute("employee");
             log.info("用户已登陆 ：{}",id);
@@ -56,6 +58,15 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
+        //同理 判断用户是否登陆
+        if (request.getSession().getAttribute("user")!=null) {
+            String id=request.getSession().getAttribute("user").toString();
+            log.info("用户已登陆 ：{}",id);
+            BaseContext.setCurrentId(Long.parseLong(id.substring(0,id.indexOf("@"))));
+            filterChain.doFilter(request,response);
+            return;
+        }
+
         log.info("用户未登陆");
         response.getWriter().write(JSON.toJSONString(Result.error("NOTLOGIN")));
             return;

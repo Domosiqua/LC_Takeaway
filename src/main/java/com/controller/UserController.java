@@ -1,0 +1,59 @@
+package com.controller;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.common.Result;
+import com.domain.User;
+import com.service.SendMailService;
+import com.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.buf.UEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
+
+import javax.jws.soap.SOAPBinding;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+
+/**
+ * @author CWB
+ * @version 1.0
+ */
+@SuppressWarnings({"all"})
+@RestController
+@RequestMapping("/user")
+@Slf4j
+public class UserController {
+
+    @Autowired
+    private UserService service;
+    @Autowired
+    private SendMailService sendMailService;
+
+    @PostMapping("/sendMsg")
+    public Result<String> sendMsg(@RequestBody User user){
+        sendMailService.SendMail(user.getPhone());
+
+        return Result.success("6");
+    }
+    @PostMapping("/login")
+    public Result<User> login(@RequestBody HashMap<String,String> map, HttpServletRequest request ){
+
+
+        if(sendMailService.checkcode(map.get("phone"), map.get("code"))){
+            request.getSession().setAttribute("user",map.get("phone"));
+            LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
+            User one = service.getOne(wrapper);
+
+            if(one ==null){
+                one=new User();
+                one.setPhone(map.get("phone"));
+                one.setStatus(1);
+                service.save(one);
+            }
+            return Result.success(one);
+        }else{
+            return Result.error("验证码错误");
+        }
+    }
+}

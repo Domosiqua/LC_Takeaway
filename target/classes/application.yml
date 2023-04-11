@@ -9,15 +9,29 @@ mybatis-plus:
 server:
   port: 8080
 spring:
+  redis:
+    host: localhost
+    port: 6379
+    client-type: jedis
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/reggie?useSSL=false&characterEncoding=utf-8
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: cwb
-#  redis:
-#    host: localhost
-#    port: 6379
-#    client-type: jedis
+  mail:
+    username: 2961777212@qq.com
+    password: wjllipvzorbgdcfd
+    host: smtp.qq.com
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: false
+      key-prefix: code_
+      cache-null-values: false
+      time-to-live: 5m
+
 reggie:
   basePath: D:\RejjieTemp\
+
+

@@ -14,13 +14,10 @@ import org.apache.ibatis.annotations.Update;
 @SuppressWarnings({"all"})
 @Mapper
 public interface EmployeeMapper extends BaseMapper<Employee> {
-//    @Select("select * from employee where username=#{username} and password=MD5(#{password})")
-//    Employee isexits(String username,String password);
 
-    @Select("select * from employee where username=#{username}")
-    Employee isexitsByUsername(String username);
-    @Update("update employee set status=#{status} where id=#{id}")
-    boolean ChangeStatus(Integer status,Long id);
-//    @Select("select status from employee where username=#{username} and password=MD5(#{password})")
-//    int isStatus(String username,String password);
+//    @Select("select * from employee where username=#{username}")
+//    Employee isexitsByUsername(String username);
+//    @Update("update employee set status=#{status} where id=#{id}")
+//    boolean ChangeStatus(Integer status,Long id);
+
 }

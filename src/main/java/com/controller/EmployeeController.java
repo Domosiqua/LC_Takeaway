@@ -43,6 +43,7 @@ public class EmployeeController {
 
         Employee employee = service.isexistByUsername(emp.getUsername());
         String password = DigestUtils.md5DigestAsHex(emp.getPassword().getBytes());
+
         if (service.isexistByUsername(emp.getUsername())==null)
             return Result.error("该用户不存在");
 
@@ -93,10 +94,7 @@ public class EmployeeController {
     @PostMapping
     public Result<Boolean> insert(HttpServletRequest request,@RequestBody Employee employee){
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-//        employee.setCreateTime(LocalDateTime.now());
-//        employee.setUpdateTime(LocalDateTime.now());
-//        employee.setCreateUser((Long) request.getSession().getAttribute("employee"));
-//        employee.setUpdateUser((Long) request.getSession().getAttribute("employee"));
+
         boolean save = service.save(employee);
 
         if (save)
@@ -113,15 +111,14 @@ public class EmployeeController {
      */
     @PutMapping
     public Result<Boolean> ChangeStatus(@RequestBody Employee emp){
+        boolean b = service.updateById(emp);
 
-//        emp.setUpdateUser((Long)request.getSession().getAttribute("employee"));
-//        emp.setUpdateTime(LocalDateTime.now());
-        if(service.updateById(emp))
-            return Result.success(service.updateById(emp));
+        if(b)
+            return Result.success(b);
         else{
             return Result.error("数据异常");
         }
-//        return Result.success( service.ChangeStatus(emp));
+
     }
 
     /**
