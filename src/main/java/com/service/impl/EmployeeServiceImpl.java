@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
-    @Autowired
-    private EmployeeMapper mapper;
+//    @Autowired
+//    private EmployeeMapper mapper;
 //    @Override
 //    public Employee isexist(String username, String password) {
 //
@@ -29,7 +29,7 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Override
     public Employee isexistByUsername(String username) {
         LambdaQueryWrapper<Employee> Wrapper=new LambdaQueryWrapper();
-        Wrapper.eq(Employee::getName,username);
+        Wrapper.eq(Employee::getUsername,username);
         return this.getOne(Wrapper);
 
     }

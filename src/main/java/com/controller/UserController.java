@@ -41,7 +41,6 @@ public class UserController {
 
 
         if(sendMailService.checkcode(map.get("phone"), map.get("code"))){
-            request.getSession().setAttribute("user",map.get("phone"));
             LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
             User one = service.getOne(wrapper);
 
@@ -50,7 +49,11 @@ public class UserController {
                 one.setPhone(map.get("phone"));
                 one.setStatus(1);
                 service.save(one);
+                one = service.getOne(wrapper);
             }
+
+            request.getSession().setAttribute("user",one.getId());
+
             return Result.success(one);
         }else{
             return Result.error("验证码错误");

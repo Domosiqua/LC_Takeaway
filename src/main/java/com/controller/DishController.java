@@ -2,6 +2,7 @@ package com.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.Result;
@@ -12,6 +13,7 @@ import com.dto.DishDto;
 import com.service.CategoryService;
 import com.service.DishFlavorService;
 import com.service.DishService;
+import com.sun.org.apache.bcel.internal.generic.LADD;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -84,18 +86,34 @@ public class DishController {
     }
 
     /**
-     * 根据菜品分类id或者菜品名称查询所属菜品列表 服务套餐管理
+     * 根据菜品分类id或者菜品名称查询菜品以及口味 服务套餐管理与用户界面展示
      * @param categoryId
      * @return
      */
     @GetMapping("/list")
-    public Result<List<Dish>> List(Long categoryId,String name){
+    public Result<List<DishDto>> List(Dish dish){
         LambdaQueryWrapper<Dish> queryWrapper =new LambdaQueryWrapper();
-        queryWrapper.eq(categoryId!=null, Dish::getCategoryId,categoryId);
-        queryWrapper.like(name!=null,Dish::getName,name);
-
+        queryWrapper.eq(dish.getCategoryId()!=null, Dish::getCategoryId,dish.getCategoryId());
+        queryWrapper.like(dish.getName()!=null,Dish::getName,dish.getName());
+        queryWrapper.eq(Dish::getStatus,1);
         List<Dish> list = service.list(queryWrapper);
-        return Result.success(list);
+        List<DishDto> retlist=  list.stream().map((item) ->{
+            Long id = item.getId();
+//            DishDto dishDto = new DishDto();
+            DishDto dishDto = service.getOneWithFlavor(id);
+
+            BeanUtils.copyProperties(item,dishDto);
+//            Long categoryId = item.getCategoryId();
+//            String ca = categoryService.getById(categoryId).getName();
+//            dishDto.setCategoryName(ca);
+//            LambdaUpdateWrapper<DishFlavor> wrapper=new LambdaUpdateWrapper<>();
+//            wrapper.eq(DishFlavor::getDishId,item.getId());
+//            List<DishFlavor> list1 = dishFlavorService.list(wrapper);
+//            dishDto.setFlavors(list1);
+            return dishDto;
+        }).collect(Collectors.toList());
+
+        return Result.success(retlist);
     }
 
     /**

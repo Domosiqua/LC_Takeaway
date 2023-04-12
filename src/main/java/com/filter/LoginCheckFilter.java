@@ -60,9 +60,9 @@ public class LoginCheckFilter implements Filter {
         }
         //同理 判断用户是否登陆
         if (request.getSession().getAttribute("user")!=null) {
-            String id=request.getSession().getAttribute("user").toString();
+            Long id=(long)request.getSession().getAttribute("user");
             log.info("用户已登陆 ：{}",id);
-            BaseContext.setCurrentId(Long.parseLong(id.substring(0,id.indexOf("@"))));
+            BaseContext.setCurrentId(id);
             filterChain.doFilter(request,response);
             return;
         }

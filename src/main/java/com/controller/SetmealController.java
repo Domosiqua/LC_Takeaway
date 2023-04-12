@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.common.Result;
 import com.domain.Dish;
@@ -100,6 +101,19 @@ public class SetmealController {
     public Result<SetmealDto> GetOne(@PathVariable Long id){
         SetmealDto SetmealDto = setmealService.getOneWithDish(id);
         return Result.success(SetmealDto);
+    }
+
+    /**
+     * 根据id获取全部套餐信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/list")
+    public Result<List<SetmealDto>> Getlist(Long categoryId){
+
+        List<SetmealDto> setmealDtos = setmealService.GetlistWithDish(categoryId);
+
+        return Result.success(setmealDtos);
     }
     /**
      * 根据id修改售卖状态

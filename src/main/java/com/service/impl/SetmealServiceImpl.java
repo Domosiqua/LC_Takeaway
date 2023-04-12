@@ -2,6 +2,7 @@ package com.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.domain.DishFlavor;
 import com.domain.Setmeal;
@@ -12,6 +13,7 @@ import com.service.SetmealService;
 import com.mapper.SetmealMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +81,25 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal>
         LambdaQueryWrapper<SetmealDish> querywrapper=new LambdaQueryWrapper<>();
         querywrapper.in(SetmealDish::getSetmealId,ids);
         setmealDishService.remove(querywrapper);
+    }
+
+    @Override
+    public List<SetmealDto> GetlistWithDish(Long id) {
+        LambdaUpdateWrapper<Setmeal> wrapper=new LambdaUpdateWrapper<>();
+        wrapper.eq(Setmeal::getCategoryId,id);
+        wrapper.eq(Setmeal::getStatus,1);
+        List<Setmeal> list = this.list(wrapper);
+        List<SetmealDto> retlist = new ArrayList<>();
+        for (Setmeal setmeal : list) {
+            SetmealDto setmealDto=new SetmealDto();
+            BeanUtils.copyProperties(setmeal,setmealDto);
+            LambdaQueryWrapper<SetmealDish> qwrapper=new LambdaQueryWrapper<>();
+            qwrapper.eq(SetmealDish::getSetmealId,setmeal.getId());
+            List<SetmealDish> list1 = setmealDishService.list(qwrapper);
+            setmealDto.setSetmealDishes(list1);
+            retlist.add(setmealDto);
+        }
+        return retlist;
     }
 }
 

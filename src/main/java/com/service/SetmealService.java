@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.dto.SetmealDto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
 * @author admin
@@ -20,4 +21,6 @@ public interface SetmealService extends IService<Setmeal> {
     boolean UpdateWithDish(SetmealDto setmealDto);
 
     void DeleteWithDish(ArrayList<Long> list);
+
+    List<SetmealDto> GetlistWithDish(Long id);
 }
