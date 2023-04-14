@@ -30,20 +30,29 @@ public class UserController {
     @Autowired
     private SendMailService sendMailService;
 
+    /**
+     * 发送验证码
+     * @param user
+     * @return
+     */
     @PostMapping("/sendMsg")
     public Result<String> sendMsg(@RequestBody User user){
         sendMailService.SendMail(user.getPhone());
 
         return Result.success("6");
     }
+
+    /**
+     * 用户登陆*检查验证码*
+     * @param map
+     * @param request
+     * @return
+     */
     @PostMapping("/login")
     public Result<User> login(@RequestBody HashMap<String,String> map, HttpServletRequest request ){
-
-
         if(sendMailService.checkcode(map.get("phone"), map.get("code"))){
             LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
             User one = service.getOne(wrapper);
-
             if(one ==null){
                 one=new User();
                 one.setPhone(map.get("phone"));
@@ -51,12 +60,22 @@ public class UserController {
                 service.save(one);
                 one = service.getOne(wrapper);
             }
-
             request.getSession().setAttribute("user",one.getId());
-
             return Result.success(one);
         }else{
             return Result.error("验证码错误");
         }
+    }
+
+    /**
+     * 用户登出
+     * @param request
+     * @return
+     */
+    @PostMapping("/loginout")
+    public Result<String> logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return Result.success("退出成功");
+
     }
 }

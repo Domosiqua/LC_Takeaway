@@ -99,17 +99,10 @@ public class DishController {
         List<Dish> list = service.list(queryWrapper);
         List<DishDto> retlist=  list.stream().map((item) ->{
             Long id = item.getId();
-//            DishDto dishDto = new DishDto();
+
             DishDto dishDto = service.getOneWithFlavor(id);
 
             BeanUtils.copyProperties(item,dishDto);
-//            Long categoryId = item.getCategoryId();
-//            String ca = categoryService.getById(categoryId).getName();
-//            dishDto.setCategoryName(ca);
-//            LambdaUpdateWrapper<DishFlavor> wrapper=new LambdaUpdateWrapper<>();
-//            wrapper.eq(DishFlavor::getDishId,item.getId());
-//            List<DishFlavor> list1 = dishFlavorService.list(wrapper);
-//            dishDto.setFlavors(list1);
             return dishDto;
         }).collect(Collectors.toList());
 

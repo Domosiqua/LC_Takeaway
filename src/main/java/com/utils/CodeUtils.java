@@ -14,7 +14,7 @@ public class CodeUtils {
 
     public String generaor(String tel){
         int hashCode = tel.hashCode();
-        int enryption = 2023888;
+        int enryption = 2023414;
         long result = hashCode ^ enryption;
         long nowtime =System.currentTimeMillis();
         result = Math.abs(result ^ nowtime);

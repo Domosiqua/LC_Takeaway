@@ -99,9 +99,9 @@ public class AddressBookController {
      * @return
      */
     @GetMapping("/default")
-    public Result<AddressBook> getAddressById(){
+    public Result<AddressBook> getdefaultAddress(){
         LambdaUpdateWrapper<AddressBook> wrapper=new LambdaUpdateWrapper<>();
-        wrapper.eq(AddressBook::getId,BaseContext.getCurrentId());
+        wrapper.eq(AddressBook::getUserId,BaseContext.getCurrentId());
         wrapper.eq(AddressBook::getIsDefault,1);
         AddressBook one = service.getOne(wrapper);
         if (one!=null){
