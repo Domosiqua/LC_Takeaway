@@ -12,17 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 class LctakeawayApplicationTests {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @Test
     void contextLoads() {
-
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("name","GLC");
-        Object name = valueOperations.get("name");
-        System.out.println(name);
-
     }
 
 }
