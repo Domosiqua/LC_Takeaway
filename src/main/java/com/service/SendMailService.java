@@ -8,7 +8,8 @@ package com.service;
 public interface SendMailService {
 
 
-    String SendMail(String to);
+    void SendMail(String to);
     boolean checkcode(String to,String code);
+    void deleteCode(String to);
 
 }

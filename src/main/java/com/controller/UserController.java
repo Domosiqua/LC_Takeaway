@@ -30,6 +30,7 @@ public class UserController {
     @Autowired
     private SendMailService sendMailService;
 
+
     /**
      * 发送验证码
      * @param user
@@ -61,6 +62,7 @@ public class UserController {
                 one = service.getOne(wrapper);
             }
             request.getSession().setAttribute("user",one.getId());
+            sendMailService.deleteCode(map.get("phone"));
             return Result.success(one);
         }else{
             return Result.error("验证码错误");

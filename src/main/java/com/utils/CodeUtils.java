@@ -1,5 +1,6 @@
 package com.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Component;
 @SuppressWarnings({"all"})
 @Component
 public class CodeUtils {
+
+
+
     private static String [] patch = {"000000","00000","0000","000","00","0",""};
 
     public String generaor(String tel){

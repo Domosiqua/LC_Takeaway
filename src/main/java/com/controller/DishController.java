@@ -16,12 +16,15 @@ import com.service.DishService;
 import com.sun.org.apache.bcel.internal.generic.LADD;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +42,8 @@ public class DishController {
     private DishFlavorService dishFlavorService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 分页展示菜品列表
@@ -81,7 +86,10 @@ public class DishController {
     @PostMapping
     public Result<String> Save(@RequestBody DishDto dishDto){
 
+
         service.saveWithFlavor(dishDto);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success("新增菜品成功");
     }
 
@@ -92,12 +100,20 @@ public class DishController {
      */
     @GetMapping("/list")
     public Result<List<DishDto>> List(Dish dish){
+        List<DishDto> retlist=null;
+        String key="dish_"+dish.getCategoryId()+"_"+dish.getStatus();
+        retlist = (List<DishDto>) redisTemplate.opsForValue().get(key);
+        if (retlist!=null){
+            return Result.success(retlist);
+        }
+
+
         LambdaQueryWrapper<Dish> queryWrapper =new LambdaQueryWrapper();
         queryWrapper.eq(dish.getCategoryId()!=null, Dish::getCategoryId,dish.getCategoryId());
         queryWrapper.like(dish.getName()!=null,Dish::getName,dish.getName());
         queryWrapper.eq(Dish::getStatus,1);
         List<Dish> list = service.list(queryWrapper);
-        List<DishDto> retlist=  list.stream().map((item) ->{
+        retlist=  list.stream().map((item) ->{
             Long id = item.getId();
 
             DishDto dishDto = service.getOneWithFlavor(id);
@@ -105,7 +121,7 @@ public class DishController {
             BeanUtils.copyProperties(item,dishDto);
             return dishDto;
         }).collect(Collectors.toList());
-
+        redisTemplate.opsForValue().set(key,retlist,60, TimeUnit.MINUTES) ;
         return Result.success(retlist);
     }
 
@@ -118,6 +134,8 @@ public class DishController {
      */
     @PostMapping("/status/{status}")
     public Result<Boolean> UpdateStatus(@PathVariable Integer status,Long[] ids){
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         ArrayList<Dish> list=new ArrayList<>();
         for (Long id : ids) {
             Dish dish=new Dish();
@@ -151,7 +169,8 @@ public class DishController {
      */
     @PutMapping
     public Result<String> Update(@RequestBody DishDto dishDto){
-
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
             boolean b = service.updateWithFlavor(dishDto);
             if (b){
                 return Result.success("修改成功");
@@ -164,7 +183,8 @@ public class DishController {
      */
     @DeleteMapping
     public Result<String> DeleteByids(Long[] ids){
-        System.out.println(ids);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         ArrayList<Long> list=new ArrayList();
         for (Long id : ids) {
             list.add(id);
