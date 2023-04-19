@@ -11,6 +11,7 @@ import com.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
  * @author CWB
  * @version 1.0
@@ -43,7 +44,7 @@ public class OrdersController {
      * @return
      */
     @GetMapping("/userPage")
-    public Result<Page<Orders>> page(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize,@RequestParam("number") String number){
+    public Result<Page<Orders>> page( int page,  int pageSize, String number){
         Page page1=new Page(page,pageSize);
         LambdaQueryWrapper<Orders> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(number!=null,Orders::getId,number);
