@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.Jedis;
+
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
