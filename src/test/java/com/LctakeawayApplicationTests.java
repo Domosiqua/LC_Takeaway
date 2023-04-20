@@ -8,20 +8,15 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 class LctakeawayApplicationTests {
-
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     @Test
     void contextLoads() {
-
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("name","GLC");
-        Object name = valueOperations.get("name");
-        System.out.println(name);
 
     }
 

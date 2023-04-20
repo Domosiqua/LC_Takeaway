@@ -190,7 +190,12 @@ public class DishController {
             list.add(id);
         }
         service.DeleteWithFlavor(list);
+
+
+
+
         return Result.success("删除成功");
+
     }
 
 

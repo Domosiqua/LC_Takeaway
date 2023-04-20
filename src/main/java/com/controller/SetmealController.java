@@ -12,6 +12,8 @@ import com.service.CategoryService;
 import com.service.SetmealService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -68,6 +70,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping
+    @CacheEvict(key = "setmealCache",allEntries = true)
     public Result<String> Save(@RequestBody SetmealDto setmealDto) {
         boolean b = setmealService.SaveWithDish(setmealDto);
         if (b){
@@ -83,6 +86,7 @@ public class SetmealController {
      * @return
      */
     @PutMapping
+    @CacheEvict(key = "setmealCache",allEntries = true)
     public Result<String> Update(@RequestBody SetmealDto setmealDto) {
         boolean b = setmealService.UpdateWithDish(setmealDto);
         if (b){
@@ -109,9 +113,10 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/list")
-    public Result<List<SetmealDto>> Getlist(Long categoryId){
+    @Cacheable(value = "setmealCache",key = "'setmeal_'+#setmeal.categoryId+'_'+#setmeal.status")
+    public Result<List<SetmealDto>> Getlist(Setmeal setmeal){
 
-        List<SetmealDto> setmealDtos = setmealService.GetlistWithDish(categoryId);
+        List<SetmealDto> setmealDtos = setmealService.GetlistWithDish(setmeal.getCategoryId());
 
         return Result.success(setmealDtos);
     }
@@ -123,6 +128,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping("/status/{status}")
+    @CacheEvict(key = "setmealCache",allEntries = true)
     public Result<Boolean> UpdateStatus(@PathVariable Integer status,Long[] ids){
         ArrayList<Setmeal> list=new ArrayList<>();
         for (Long id : ids) {
@@ -143,6 +149,7 @@ public class SetmealController {
      * @return
      */
     @DeleteMapping
+    @CacheEvict(key = "setmealCache",allEntries = true)
     public Result<String> DeleteByids(Long[] ids){
         LambdaQueryWrapper<Setmeal> wrapper=new LambdaQueryWrapper();
         wrapper.in(Setmeal::getId,ids);

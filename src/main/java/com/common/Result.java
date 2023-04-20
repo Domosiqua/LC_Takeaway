@@ -3,6 +3,7 @@ package com.common;
 import com.domain.CODE;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  */
 @SuppressWarnings({"all"})
 @Data
-public class Result <R>{
+public class Result <R> implements Serializable {
     private Integer code;
     private String msg;
     private R data;
