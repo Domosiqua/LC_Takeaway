@@ -5,6 +5,7 @@ import com.domain.Setmeal;
 import com.domain.SetmealDish;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @SuppressWarnings({"all"})
 @Data
-public class SetmealDto extends Setmeal {
+public class SetmealDto extends Setmeal implements Serializable {
 
     private List<SetmealDish> setmealDishes=new ArrayList();
 
