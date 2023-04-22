@@ -36,10 +36,14 @@ public class LoginCheckFilter implements Filter {
         String []urls=new String[]{
           "/employee/login",
           "/employee/logout",
-                "/backend/**",
-                "/front/**",
-                "/user/login",
-                "/user/sendMsg"
+          "/backend/**",
+          "/front/**",
+          "/user/login",
+          "/user/sendMsg",
+          "/doc.html",
+          "/webjars/**",
+          "/swagger-resources",
+          "/v2/spi-docs"
         };
         log.info("拦截到请求:{}",request.getRequestURI());
 
