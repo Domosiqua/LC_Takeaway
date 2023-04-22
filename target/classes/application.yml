@@ -13,6 +13,13 @@ spring:
     host: localhost
     port: 6379
     database: 0
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: false
+      key-prefix: code_
+      cache-null-values: false
+      time-to-live: 5m
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/reggie?useSSL=false&characterEncoding=utf-8
@@ -23,13 +30,7 @@ spring:
     username: 2961777212@qq.com
     password: wjllipvzorbgdcfd
     host: smtp.qq.com
-  cache:
-    type: redis
-    redis:
-      use-key-prefix: false
-      key-prefix: code_
-      cache-null-values: false
-      time-to-live: 5m
+
 
 reggie:
   basePath: D:\RejjieTemp\
