@@ -11,6 +11,9 @@ import com.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * @author CWB
@@ -60,10 +63,27 @@ public class OrdersController {
      * @return
      */
     @GetMapping("/page")
-    public Result<Page<Orders>> Page(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+    public Result<Page<Orders>> Page(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize,@RequestParam(value = "number",required = false)Long id,@RequestParam(value = "beginTime",required = false)String beginTimeStr,@RequestParam(value = "endTime",required = false)String endTimeStr){
         Page page1=new Page(page,pageSize);
         LambdaQueryWrapper<Orders> wrapper=new LambdaQueryWrapper<>();
         wrapper.orderByDesc(Orders::getOrderTime);
+        wrapper.like(id!=null,Orders::getId,id);
+        LocalDateTime beginTime=null;
+        LocalDateTime endTime=null;
+
+        if (beginTimeStr!=null)
+        {
+            beginTime = LocalDateTime.parse(beginTimeStr,
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.println(beginTime);
+        }
+        if (endTimeStr!=null)
+        {
+            endTime = LocalDateTime.parse(endTimeStr,
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            System.out.println(endTime);
+        }
+        wrapper.between(beginTime!=null&&endTime!=null,Orders::getOrderTime,beginTime,endTime);
         service.page(page1,wrapper);
         return Result.success(page1);
     }

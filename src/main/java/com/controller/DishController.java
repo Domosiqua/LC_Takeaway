@@ -58,6 +58,7 @@ public class DishController {
         LambdaQueryWrapper<Dish> queryWrapper =new LambdaQueryWrapper();
         queryWrapper.orderByDesc(Dish::getSort);
         queryWrapper.like(name!=null,Dish::getName,name);
+
         service.page(page1, queryWrapper);
         BeanUtils.copyProperties(page1,page2,"records");
 
