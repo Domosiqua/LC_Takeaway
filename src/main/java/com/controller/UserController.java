@@ -6,12 +6,10 @@ import com.domain.User;
 import com.service.SendMailService;
 import com.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 

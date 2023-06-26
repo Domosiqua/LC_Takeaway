@@ -30,6 +30,7 @@ D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\domain\Employee.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\dto\SetmealDto.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\LctakeawayApplication.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\impl\ShoppingCartServiceImpl.java
+D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\config\RedisConfig.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\impl\DishServiceImpl.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\mapper\CategoryMapper.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\common\Result.java
@@ -41,6 +42,7 @@ D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\controller\SetmealCon
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\impl\DishFlavorServiceImpl.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\domain\SetmealDish.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\DishService.java
+D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\config\WebMvcConfig.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\impl\OrderDetailServiceImpl.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\domain\Setmeal.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\domain\OrderDetail.java
@@ -51,7 +53,6 @@ D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\CategoryServi
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\mapper\DishFlavorMapper.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\mapper\OrderDetailMapper.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\OrdersService.java
-D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\controller\OrderDetailController.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\service\ShoppingCartService.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\common\BaseContext.java
 D:\Program\IDEA_JAVA_project\LC_Takeaway\src\main\java\com\controller\ShoppingCartController.java

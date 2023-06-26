@@ -5,19 +5,17 @@ package com.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.domain.Employee;
 import com.common.Result;
+import com.domain.Employee;
 import com.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.util.DigestUtils;
 
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 /**
  * @author CWB
@@ -39,7 +37,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    public Result<Employee> login(HttpServletRequest request,@RequestBody Employee emp){
+    public Result<Employee> login(HttpServletRequest request, @RequestBody Employee emp){
 
         Employee employee = service.isexistByUsername(emp.getUsername());
         String password = DigestUtils.md5DigestAsHex(emp.getPassword().getBytes());

@@ -30,7 +30,7 @@ public class AddressBookController {
     @GetMapping("/list")
     public Result<List<AddressBook>> getlist(){
         LambdaQueryWrapper<AddressBook> wrapper=new LambdaQueryWrapper<>();
-        wrapper.eq(AddressBook::getUserId,BaseContext.getCurrentId());
+        wrapper.eq(AddressBook::getUserId, BaseContext.getCurrentId());
         List<AddressBook> list = service.list(wrapper);
         return Result.success(list);
     }

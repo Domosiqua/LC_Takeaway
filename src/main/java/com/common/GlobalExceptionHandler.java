@@ -1,9 +1,7 @@
 package com.common;
 
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLIntegrityConstraintViolationException;

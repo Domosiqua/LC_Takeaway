@@ -1,15 +1,11 @@
 package com.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.common.BaseContext;
 import com.common.Result;
 import com.domain.ShoppingCart;
 import com.service.ShoppingCartService;
-import org.omg.CORBA.PUBLIC_MEMBER;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
